@@ -14,7 +14,7 @@ public class Mount : MonoBehaviour
         controller = GetComponent<MountController>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 horizontalInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
         Vector3 verticalInput = new Vector3(0, 0, Input.GetAxisRaw("Vertical"));

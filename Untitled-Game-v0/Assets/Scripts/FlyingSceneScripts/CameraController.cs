@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(target.position.x, target.position.y + viewHeight, target.position.z);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //move
         Vector3 updatedTarget = new Vector3(target.position.x, target.position.y + viewHeight, target.position.z);

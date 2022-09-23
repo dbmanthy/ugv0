@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+//states call these funcitons to do things to the mount
 public class MountController : MonoBehaviour
 {
 
@@ -16,7 +17,7 @@ public class MountController : MonoBehaviour
     float climbSpeed = 4f;
 
 
-    public void Move(Vector3 input, float moveSpeed, float rotationSpeed)
+    public void Move(Vector2 input, float moveSpeed, float rotationSpeed)
     {
         //local rotate
         Vector3 localRotation = transform.localEulerAngles;
@@ -48,24 +49,71 @@ public class MountController : MonoBehaviour
         transform.position += moveDistance * Time.deltaTime;
     }
 
-    public void ChangeElevation(Vector3 input)
+    public void Move(Vector2 input, float moveSpeed)
+    {
+        //local move
+        Vector3 moveDistance = transform.forward * moveSpeed;
+        transform.position += moveDistance * Time.deltaTime;
+    }
+
+    public void EnterBank(Vector2 input, float turnSpeed)
     {
         //local rotate
         Vector3 localRotation = transform.localEulerAngles;
-        if (input.z == 0)
+        localRotation.z -= turnSpeed * input.x;
+        localRotation.z = ConvertToAngle180(localRotation.z);
+        localRotation.z = Mathf.Clamp(localRotation.z, minRotate, maxRotate);
+        Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
+        transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, outRollLerpRate);
+
+        //global rotate
+        Vector3 rotation = transform.eulerAngles;
+        rotation.y += turnSpeed * input.x;
+        Quaternion newRotaion = Quaternion.Euler(rotation);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, yawLerpRate);
+    }
+
+    public void ExitBank()
+    {
+        //local rotate
+        Vector3 localRotation = transform.localEulerAngles;
+        localRotation.z = 0;
+        transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), inRollLerpRate);
+
+        //global rotate
+        Vector3 rotation = transform.eulerAngles;
+        Quaternion newRotaion = Quaternion.Euler(rotation);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, yawLerpRate);
+    }
+
+    public void ChangeElevation(Vector2 input)
+    {
+        //local rotate
+        Vector3 localRotation = transform.localEulerAngles;
+        if (input.y == 0)
         {
             localRotation.x = 0;
             transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), inRollLerpRate);
         }
         else
         {
-            float speeed = input.z == -1 ? diveSpeed : climbSpeed;
-            localRotation.x += speeed * input.z;
+            float speeed = input.y == -1 ? diveSpeed : climbSpeed;
+            localRotation.x += speeed * input.y;
             localRotation.x = ConvertToAngle180(localRotation.x);
             localRotation.x = Mathf.Clamp(localRotation.x, minRotate, maxRotate);
             Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
             transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, outRollLerpRate);
         }
+    }
+
+    public void Dive()
+    {
+
+    }
+
+    public void Climb()
+    {
+
     }
 
     //sourcehttps://answers.unity.com/questions/984389/how-to-limit-the-rotation-of-transformrotate.html

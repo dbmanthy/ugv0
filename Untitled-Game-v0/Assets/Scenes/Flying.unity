@@ -123,6 +123,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &338631714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 338631716}
+  - component: {fileID: 338631715}
+  m_Layer: 0
+  m_Name: WorldSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &338631715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338631714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17d15b581d6a941a1ac7cc3fff35b5c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5461015074602070094, guid: 04ec91f73e2ad4d048d54168effedec1, type: 3}
+  player: {fileID: 1461040322}
+  spawnBoundry: 100
+  worldSpread: 100
+  worldPoints: 100
+  worldDensity: 18
+--- !u!4 &338631716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 338631714}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.5531883, y: 14.3214, z: -0.16301894}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &694725645
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,8 +657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e148d633744c4e5a8fe3dff18a61450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityData: {fileID: 0}
-  mountData: {fileID: 11400000, guid: 7bfedfca8b0324ad49b1cd7ab1982881, type: 2}
 --- !u!114 &1461040324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,6 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32db477c834d34a29ad69be7ebd0b1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mountData: {fileID: 11400000, guid: 7bfedfca8b0324ad49b1cd7ab1982881, type: 2}
 --- !u!114 &1461040325
 MonoBehaviour:
   m_ObjectHideFlags: 0

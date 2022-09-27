@@ -13,7 +13,7 @@ public class Super_InAirState : State
     {
         this.mount = mount;
         this.controller = mount.controller;
-        this.mountData = mount.mountData;
+        this.mountData = mount.controller.mountData;
     }
 
     public override void DoChecks()

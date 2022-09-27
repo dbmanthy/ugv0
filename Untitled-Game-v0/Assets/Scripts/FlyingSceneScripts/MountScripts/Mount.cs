@@ -14,16 +14,17 @@ public class Mount : Entity
     public Diving_InAirState divingInAirState { get; private set; }
 
     public MountInputHandler inputHandler { get; private set; }
-    public MountController controller;
+    public MountController controller { get; private set; }
 
-    [SerializeField]
-    public MountData mountData;
+    //[SerializeField]
+    //public MountData mountData;
 
     public override void Awake()
     {
         base.Awake();
 
         //dont need to create super states
+        controller = GetComponent<MountController>();
         idleInAirState = new Idle_InAirState(this, stateMachine, entityData, "IdleInAir", this);
         bankingInAirState = new Banking_InAirState(this, stateMachine, entityData, "BankingInAir", this);
         climbingInAirState = new Climbing_InAirState(this, stateMachine, entityData, "BankingInAir", this);
@@ -36,7 +37,7 @@ public class Mount : Entity
         stateMachine.InitializeStateMachine(idleInAirState);
         //states have reference to entity and entity has reference to input handler so by the transitive property ..
         inputHandler = GetComponent<MountInputHandler>();
-        controller = GetComponent<MountController>();
+        
     }
 
     public override void Update()

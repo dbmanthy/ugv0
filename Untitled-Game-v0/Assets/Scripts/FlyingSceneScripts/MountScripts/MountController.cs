@@ -6,7 +6,8 @@ using static UnityEngine.GraphicsBuffer;
 //states call these funcitons to do things to the mount
 public class MountController : MonoBehaviour
 {
-
+    [SerializeField]
+    public MountData mountData;
 
     float minRotate = -50f;
     float maxRotate = 50f;
@@ -15,39 +16,6 @@ public class MountController : MonoBehaviour
     float inRollLerpRate = .22f;
     float diveSpeed = 10f;
     float climbSpeed = 4f;
-
-
-    public void Move(Vector2 input, float moveSpeed, float rotationSpeed)
-    {
-        //local rotate
-        Vector3 localRotation = transform.localEulerAngles;
-        if (input.x == 0)
-        {
-            localRotation.z = 0;
-            transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), inRollLerpRate);
-
-        }
-        else
-        {
-            localRotation.z -= rotationSpeed * input.x;
-            localRotation.z = ConvertToAngle180(localRotation.z);
-            localRotation.z = Mathf.Clamp(localRotation.z, minRotate, maxRotate);
-            Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
-            transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, outRollLerpRate);
-        }
-
-        //global rotate
-        Vector3 rotation = transform.eulerAngles;
-        rotation.y += rotationSpeed * input.x;
-        Quaternion newRotaion = Quaternion.Euler(rotation);
-        //transform.rotation = newRotaion;
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, yawLerpRate);
-
-
-        //local move
-        Vector3 moveDistance = transform.forward * moveSpeed;
-        transform.position += moveDistance * Time.deltaTime;
-    }
 
     public void Move(Vector2 input, float moveSpeed)
     {
@@ -86,6 +54,17 @@ public class MountController : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, yawLerpRate);
     }
 
+
+    public void Dive()
+    {
+
+    }
+
+    public void Climb()
+    {
+
+    }
+
     public void ChangeElevation(Vector2 input)
     {
         //local rotate
@@ -104,16 +83,6 @@ public class MountController : MonoBehaviour
             Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
             transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, outRollLerpRate);
         }
-    }
-
-    public void Dive()
-    {
-
-    }
-
-    public void Climb()
-    {
-
     }
 
     //sourcehttps://answers.unity.com/questions/984389/how-to-limit-the-rotation-of-transformrotate.html

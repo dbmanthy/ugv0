@@ -16,6 +16,7 @@ public class MountData : ScriptableObject
     [Header("BankingInAir")]
     public float moveSpeed = 10f;
     public float rotationSpeed = 6f;
+
     public float minRotate = -50f;
     public float maxRotate = 50f;
 }

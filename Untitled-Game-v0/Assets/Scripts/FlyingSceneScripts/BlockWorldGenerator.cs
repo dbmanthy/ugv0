@@ -8,10 +8,10 @@ public class BlockWorldGenerator : MonoBehaviour
     public Transform prefab;
 
     public Transform player;
-    public float spawnBoundry = 100f;
-    public float worldSpread = 100f;
-    public int worldPoints = 200;
-    public int worldDensity = 18;
+    public float spawnBoundry = 150f;
+    public float worldSpread = 200f;
+    public int worldPoints = 100;
+    public int worldDensity = 24;
 
     List<DiskPoint> landObjects = new List<DiskPoint>();
     Vector3 lastSpawnPoint;
@@ -46,8 +46,6 @@ public class BlockWorldGenerator : MonoBehaviour
 
     void SpawnWorld(ref List<DiskPoint> landObjects, int numPoints, int density, float threashold, bool initialSpawn = false)
     {
-        Debug.Log("=== ENTER SPAWN ===");
-        Debug.Log("S_Current land objects: " + landObjects.Count);
         List<DiskPoint> diskPoints = GenerateDiskPoints(player.position, numPoints, worldSpread);
 
         //preform random shuffle -> do first to limit how many points need to go through
@@ -67,13 +65,10 @@ public class BlockWorldGenerator : MonoBehaviour
             }
         }
         lastSpawnPoint = player.position;
-        Debug.Log("Land objects after add: " + landObjects.Count);
     }
 
     void RemoveOuterLands(ref List<DiskPoint> landObjects, Vector3 newSpawnPos, float threashold)
     {
-        Debug.Log("=== ENTER REMOVE ===");
-        Debug.Log("R_Current land objects: " + landObjects.Count);
         List<DiskPoint> toRemove = new List<DiskPoint>();
         foreach(DiskPoint diskPoint in landObjects)
         {
@@ -87,15 +82,14 @@ public class BlockWorldGenerator : MonoBehaviour
         {
             landObjects.Remove(diskPoint);
         }
-        Debug.Log("Land objects after remove: " + landObjects.Count);
     }
 
     List<DiskPoint> GenerateDiskPoints(Vector3 origin, int numPoints, float spread)
     {
         float pow = .5f;//same as sqrt
         float turnFraction = (1 + Mathf.Sqrt(5)) / 2;//golden ratio
-
         List<DiskPoint> diskPoints = new List<DiskPoint>();
+        Color color = Random.ColorHSV();
 
         for (int i = 0; i < numPoints; i ++)
         {
@@ -105,7 +99,7 @@ public class BlockWorldGenerator : MonoBehaviour
             float x = dst * Mathf.Cos(angle);
             float z = dst * Mathf.Sin(angle);
 
-            DiskPoint point = new DiskPoint(prefab, this.transform, x + origin.x, z + origin.z);
+            DiskPoint point = new DiskPoint(prefab, this.transform, color, x + origin.x, z + origin.z);
             diskPoints.Add(point);
         }
 
@@ -115,23 +109,27 @@ public class BlockWorldGenerator : MonoBehaviour
     struct DiskPoint
     {
         public Vector3 position;
+
         Transform obj;
         Transform parent;
         Transform prefab;
+        Color color;
 
-        public DiskPoint(Transform _prefab, Transform _parent, float x, float z)
+        public DiskPoint(Transform _prefab, Transform _parent, Color _color, float x, float z)
         {
-            position = new Vector3(x, 0, z);
-            obj = null;
             parent = _parent;
             prefab = _prefab;
+            color = _color;
+
+            position = new Vector3(x, 0, z);
+            obj = null;
         }
 
         public void InstatiateObject()
         {
             obj = Instantiate(prefab, position, Quaternion.identity, parent) as Transform;
-            obj.GetComponent<Renderer>().material.color = Random.ColorHSV();
-            //obj.transform.SetParent(parent); 
+            obj.localScale = new Vector3(Random.Range(1,50), Random.Range(1, 50), Random.Range(1, 50));
+            obj.GetComponent<Renderer>().material.color = color;
         }
 
         public void DestroyObject()

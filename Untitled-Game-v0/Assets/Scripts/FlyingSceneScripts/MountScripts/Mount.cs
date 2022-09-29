@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MountInputHandler))]
-[RequireComponent(typeof(MountController))]//holds funcitons for the mounts
+[RequireComponent(typeof(MountController))]//holds funcitons for the mountsd
+[RequireComponent(typeof(MountCameraController))]
 
 public class Mount : Entity
 {

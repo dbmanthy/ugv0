@@ -17,7 +17,7 @@ MonoBehaviour:
   inRollLerpRate: 0.22
   diveSpeed: 10
   climbSpeed: 4
-  moveSpeed: 20
+  moveSpeed: 26
   rotationSpeed: 20
   minRotate: -50
   maxRotate: 50

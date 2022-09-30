@@ -9,11 +9,27 @@ public class MountController : MonoBehaviour
     [SerializeField]
     public MountData mountData;
 
-    public void Move(Vector2 input, float moveSpeed)
+    public void Move(Vector2 input)
     {
-        //local move
-        Vector3 moveDistance = transform.forward * moveSpeed;
-        transform.position += moveDistance * Time.deltaTime;
+        Vector3 inputVelocity = transform.right * input.x;
+        inputVelocity.y = 0; //ignore roll
+        //inputVelocity += transform.forward;
+        mountData.velocity = (mountData.velocity + inputVelocity).normalized * mountData.movementSpeed;
+
+        //mountData.velocity.y = 0;
+
+        transform.position += mountData.velocity * Time.deltaTime;
+
+        Debug.Log(mountData.velocity);
+
+        RotateToVelocity();
+    }
+
+    public void RotateToVelocity()
+    {
+        //global rotate
+        Quaternion newRotaion = Quaternion.LookRotation(mountData.velocity);
+        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
     }
 
     public void EnterBank(Vector2 input, float turnSpeed)
@@ -27,10 +43,10 @@ public class MountController : MonoBehaviour
         transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, mountData.outRollLerpRate);
 
         //global rotate
-        Vector3 rotation = transform.eulerAngles;
-        rotation.y += turnSpeed * input.x;
-        Quaternion newRotaion = Quaternion.Euler(rotation);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
+        //Vector3 rotation = transform.eulerAngles;
+        //rotation.y += turnSpeed * input.x;
+        //Quaternion newRotaion = Quaternion.Euler(rotation);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
     }
 
     public void ExitBank()
@@ -41,21 +57,34 @@ public class MountController : MonoBehaviour
         transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), mountData.inRollLerpRate);
 
         //global rotate
-        Vector3 rotation = transform.eulerAngles;
-        Quaternion newRotaion = Quaternion.Euler(rotation);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
+        //Vector3 rotation = transform.eulerAngles;
+        //Quaternion newRotaion = Quaternion.Euler(rotation);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
     }
 
 
     public void EnterSwoop(Vector2 input)
     {
         //TODO: subtract vertical move speed componsate for uptick
-        transform.position += Vector3.up * mountData.swoopDistance * input.y * Time.deltaTime;
+        Vector3 swoopImpulse = Vector3.up * mountData.swoopDistance * input.y * Time.deltaTime;
+        //transform.position += swoopImpulse;
+        mountData.velocity += swoopImpulse;
     }
 
     public void ExitSwoop()
     {
+        int correcitonDirection = mountData.velocity.y > 0 ? -1 : 1;
+        int lastSwoopVelocity = (int) mountData.velocity.y;
 
+        Vector3 swoopDamp = Vector3.up * mountData.swoopDamping * correcitonDirection * Time.deltaTime;
+        mountData.velocity += swoopDamp;
+        int currentSwoopVelocity = (int) mountData.velocity.y;
+
+        //check if the prev v and curr v are differnt signs if so then have crossed the 0 boundry so set to 0
+        if ((lastSwoopVelocity ^ currentSwoopVelocity) >= 0)
+        {
+            mountData.velocity.y = 0;
+        }
     }
 
     //public void ChangeElevation(Vector2 input)

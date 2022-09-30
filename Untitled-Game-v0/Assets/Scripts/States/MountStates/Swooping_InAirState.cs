@@ -37,6 +37,6 @@ public class Swooping_InAirState : Super_InAirState
     {
         base.PhysicsUpdate();
         mount.controller.EnterSwoop(input);
-        mount.controller.Move(input, mountData.initialMoveSpeed);
+        mount.controller.Move(input);
     }
 }

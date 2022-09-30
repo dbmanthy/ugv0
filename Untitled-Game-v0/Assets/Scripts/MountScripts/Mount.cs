@@ -36,7 +36,8 @@ public class Mount : Entity
         stateMachine.InitializeStateMachine(idleInAirState);
         //states have reference to entity and entity has reference to input handler so by the transitive property ..
         inputHandler = GetComponent<MountInputHandler>();
-        
+
+        controller.mountData.velocity = Vector3.zero;
     }
 
     public override void Update()

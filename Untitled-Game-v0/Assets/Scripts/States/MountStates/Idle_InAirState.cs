@@ -46,6 +46,11 @@ public class Idle_InAirState : Super_InAirState
             mount.controller.ExitBank();
         }
 
-        mount.controller.Move(input, mountData.initialMoveSpeed); //?: why is mountData. okay but controller. causes reference error ? has to be mount.controller. but why ... because were creating this before mountData so mountDat did not yet exitst to reference
+        if(mountData.velocity.y != 0)
+        {
+            mount.controller.ExitSwoop();
+        }
+
+        mount.controller.Move(input); //?: why is mountData. okay but controller. causes reference error ? has to be mount.controller. but why ... because were creating this before mountData so mountDat did not yet exitst to reference
     }
 }

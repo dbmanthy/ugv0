@@ -11,8 +11,7 @@ public class Mount : Entity
     //set states
     public Idle_InAirState idleInAirState { get; private set; }
     public Banking_InAirState bankingInAirState { get; private set; }
-    public Climbing_InAirState climbingInAirState { get; private set; }
-    public Diving_InAirState divingInAirState { get; private set; }
+    public Swooping_InAirState swoopingInAirState { get; private set; }
 
     public MountInputHandler inputHandler { get; private set; }
     public MountController controller { get; private set; }
@@ -28,8 +27,7 @@ public class Mount : Entity
         controller = GetComponent<MountController>();
         idleInAirState = new Idle_InAirState(this, stateMachine, entityData, "IdleInAir", this);
         bankingInAirState = new Banking_InAirState(this, stateMachine, entityData, "BankingInAir", this);
-        climbingInAirState = new Climbing_InAirState(this, stateMachine, entityData, "BankingInAir", this);
-        divingInAirState = new Diving_InAirState(this, stateMachine, entityData, "BankingInAir", this);
+        swoopingInAirState = new Swooping_InAirState(this, stateMachine, entityData, "SwoopingInAir", this);
     }
 
     public override void Start()

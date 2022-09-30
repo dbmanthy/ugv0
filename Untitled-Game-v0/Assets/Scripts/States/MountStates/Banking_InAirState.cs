@@ -37,6 +37,6 @@ public class Banking_InAirState : Super_InAirState
     {
         base.PhysicsUpdate();
         mount.controller.EnterBank(input, mountData.rotationSpeed);
-        mount.controller.Move(input, mountData.moveSpeed);
+        mount.controller.Move(input, mountData.initialMoveSpeed);
     }
 }

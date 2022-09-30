@@ -15,7 +15,6 @@ public class MountController : MonoBehaviour
         Vector3 moveDistance = transform.forward * moveSpeed;
         transform.position += moveDistance * Time.deltaTime;
     }
-        // a lot of good maths 
 
     public void EnterBank(Vector2 input, float turnSpeed)
     {

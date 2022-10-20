@@ -11,25 +11,29 @@ public class MountController : MonoBehaviour
 
     public void Move(Vector2 input)
     {
+        float currentSpeed = mountData.velocity.magnitude;
         Vector3 inputVelocity = transform.right * input.x;
-        inputVelocity.y = 0; //ignore roll
-        //inputVelocity += transform.forward;
-        mountData.velocity = (mountData.velocity + inputVelocity).normalized * mountData.movementSpeed;
-
-        //mountData.velocity.y = 0;
-
+        inputVelocity.y = 0; //ignore roll                      --> TODO: is this breaking swoop?!
+        mountData.velocity = (mountData.velocity + inputVelocity).normalized * currentSpeed;
         transform.position += mountData.velocity * Time.deltaTime;
 
-        Debug.Log(mountData.velocity);
+        RotateToVelocity();
+    }
 
+    public void Move()
+    {
+        transform.position += mountData.velocity * Time.deltaTime;
         RotateToVelocity();
     }
 
     public void RotateToVelocity()
     {
         //global rotate
-        Quaternion newRotaion = Quaternion.LookRotation(mountData.velocity);
-        transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
+        if (mountData.velocity != Vector3.zero)
+        {
+            Quaternion newRotaion = Quaternion.LookRotation(mountData.velocity);
+            transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
+        }
     }
 
     public void EnterBank(Vector2 input, float turnSpeed)
@@ -41,12 +45,6 @@ public class MountController : MonoBehaviour
         localRotation.z = Mathf.Clamp(localRotation.z, mountData.minRotate, mountData.maxRotate);
         Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
         transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, mountData.outRollLerpRate);
-
-        //global rotate
-        //Vector3 rotation = transform.eulerAngles;
-        //rotation.y += turnSpeed * input.x;
-        //Quaternion newRotaion = Quaternion.Euler(rotation);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
     }
 
     public void ExitBank()
@@ -55,18 +53,14 @@ public class MountController : MonoBehaviour
         Vector3 localRotation = transform.localEulerAngles;
         localRotation.z = 0;
         transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), mountData.inRollLerpRate);
-
-        //global rotate
-        //Vector3 rotation = transform.eulerAngles;
-        //Quaternion newRotaion = Quaternion.Euler(rotation);
-        //transform.rotation = Quaternion.Lerp(transform.rotation, newRotaion, mountData.yawLerpRate);
     }
 
 
     public void EnterSwoop(Vector2 input)
     {
+        //TODO: add gravity scaling to make it feel like a flappy bird flap .add weight  
         //TODO: subtract vertical move speed componsate for uptick
-        Vector3 swoopImpulse = Vector3.up * mountData.swoopDistance * input.y * Time.deltaTime;
+        Vector3 swoopImpulse = Vector3.down * mountData.swoopDistance * input.y * Time.deltaTime * 100;
         //transform.position += swoopImpulse;
         mountData.velocity += swoopImpulse;
     }
@@ -87,25 +81,10 @@ public class MountController : MonoBehaviour
         }
     }
 
-    //public void ChangeElevation(Vector2 input)
-    //{
-    //    //local rotate
-    //    Vector3 localRotation = transform.localEulerAngles;
-    //    if (input.y == 0)
-    //    {
-    //        localRotation.x = 0;
-    //        transform.localRotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(localRotation), inRollLerpRate);
-    //    }
-    //    else
-    //    {
-    //        float speeed = input.y == -1 ? diveSpeed : climbSpeed;
-    //        localRotation.x += speeed * input.y;
-    //        localRotation.x = ConvertToAngle180(localRotation.x);
-    //        localRotation.x = Mathf.Clamp(localRotation.x, minRotate, maxRotate);
-    //        Quaternion newLocalRotaion = Quaternion.Euler(localRotation);
-    //        transform.localRotation = Quaternion.Lerp(transform.rotation, newLocalRotaion, outRollLerpRate);
-    //    }
-    //}
+    public void ChangeElevation(Vector2 input)
+    {
+        Debug.Log("enDive");
+    }
 
     //sourcehttps://answers.unity.com/questions/984389/how-to-limit-the-rotation-of-transformrotate.html
     public static float ConvertToAngle180(float input)

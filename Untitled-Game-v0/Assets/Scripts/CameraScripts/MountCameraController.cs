@@ -17,7 +17,6 @@ public class MountCameraController : MonoBehaviour
     {
         viewOffset = new Vector3(0, upDownOffset, 0);
         mountCamera.transform.position = transform.position + viewOffset;
-        //mountCamera.transform.LookAt(this.transform.position);
     }
 
     void FixedUpdate()
@@ -33,9 +32,9 @@ public class MountCameraController : MonoBehaviour
 
     void RotateCamera()
     {
+        //rotate camera to match target yaw 
         Vector3 rotation = mountCamera.transform.eulerAngles;
         rotation.y = transform.localEulerAngles.y;
-        //rotation.z = .1f * transform.localEulerAngles.z;
         Quaternion newRotaion = Quaternion.Euler(rotation);
         mountCamera.transform.rotation = Quaternion.Lerp(mountCamera.transform.rotation, newRotaion, rLerp);
     }

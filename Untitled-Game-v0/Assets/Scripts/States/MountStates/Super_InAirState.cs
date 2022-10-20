@@ -24,6 +24,7 @@ public class Super_InAirState : State
     public override void EnterState()
     {
         base.EnterState();
+        Debug.Log(mount.stateMachine.currentState);
     }
 
     public override void ExitState()
@@ -34,7 +35,7 @@ public class Super_InAirState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        input = mount.inputHandler.bankInput;
+        input = mount.inputHandler.controllerInput;
     }
 
     public override void PhysicsUpdate()

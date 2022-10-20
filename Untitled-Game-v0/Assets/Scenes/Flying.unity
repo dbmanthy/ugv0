@@ -747,5 +747,5 @@ MonoBehaviour:
   pLerp: 0.5
   rLerp: 0.05
   upDownOffset: 80
-  backFrontOffset: 0
+  backFrontOffset: 10
   viewOffset: {x: 0, y: 0, z: 0}

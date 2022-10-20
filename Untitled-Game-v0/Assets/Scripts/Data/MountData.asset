@@ -12,13 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1de684cb3b6784eac996a8193456c5e9, type: 3}
   m_Name: MountData
   m_EditorClassIdentifier: 
-  velocity: {x: 18.242994, y: 0, z: 18.525475}
+  velocity: {x: -25.962593, y: 0, z: -1.3938041}
   rotationSpeed: 20
   movementSpeed: 26
+  baseMovementSpeed: 26
   minRotate: -50
   maxRotate: 50
   yawLerpRate: 0.1
   outRollLerpRate: 0.5
   inRollLerpRate: 0.22
   swoopDistance: 60
-  swoopDamping: 10
+  swoopDamping: 5
+  swoopTimeDelay: 0.5
+  diveTimeBuffer: 2
+  worldBaseHeight: 0
+  worldUpperHeight: 300
+  worldMiddleHeight: 150
+  enRoute: 0

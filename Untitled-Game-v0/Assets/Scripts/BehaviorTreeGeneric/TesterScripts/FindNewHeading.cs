@@ -13,9 +13,9 @@ public class FindNewHeading : BehaviorNode
         this.transform = transform;
     }
 
-    public override BehaviorState EvaluateNode()
+    public override BehaviorState LogicUpdate()
     {
-        Debug.Log("FindNewHeading");
+        //Debug.Log("FindNewHeading");
         int flipper = 1;
         float rotationAngle = 0f;
 
@@ -36,10 +36,11 @@ public class FindNewHeading : BehaviorNode
             collisionCheck = new Ray(transform.position, rayDirection);
             Debug.DrawRay(transform.position, rayDirection);
         }
-        
-        parent.parent.SetData("heading", rayDirection);
-        parent.parent.ClearData("collision");
-        
+
+        BehaviorNode root = GetRoot();
+        root.SetData("heading", rayDirection);
+        root.ClearData("collision");
+
         nodeState = BehaviorState.SUCCESS;
         return nodeState;
     }

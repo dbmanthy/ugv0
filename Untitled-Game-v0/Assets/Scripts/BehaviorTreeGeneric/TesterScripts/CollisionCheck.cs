@@ -10,12 +10,12 @@ public class CollisionCheck : BehaviorNode
 
     public CollisionCheck(Transform transform)
     {
-        this.transform = transform; 
+        this.transform = transform;
     }
 
-    public override BehaviorState EvaluateNode()
+    public override BehaviorState LogicUpdate()
     {
-        Debug.Log("CollisionCheck");
+        //Debug.Log("CollisionCheck");
         object t = GetData("collision");
         if (t == null)
         {
@@ -32,7 +32,8 @@ public class CollisionCheck : BehaviorNode
 
             if(Physics.Raycast(collisionCheck, out RaycastHit hit, TestBT.raycastDist))
             {
-                parent.parent.SetData("collision", hit);
+                BehaviorNode root = GetRoot();
+                root.SetData("collision", hit);
                 nodeState = BehaviorState.SUCCESS;
                 return nodeState;
             }

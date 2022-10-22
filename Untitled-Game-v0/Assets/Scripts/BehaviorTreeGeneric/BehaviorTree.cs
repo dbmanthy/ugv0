@@ -17,9 +17,19 @@ namespace TreeBehaviour
         {
             if(root!= null)
             {
-                root.EvaluateNode();
+                //Tick
+                root.LogicUpdate();
             }
         }
+
+        //void FixedUpdate()
+        //{
+        //    if (root != null)
+        //    {
+        //        Debug.Log("Update(" + root.name + ")");
+        //        root.PhysicsUpdate();
+        //    }
+        //}
 
         protected abstract BehaviorNode PlantSBTree();
     }

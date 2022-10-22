@@ -13,9 +13,9 @@ public class Move : BehaviorNode
         this.transform = transform;
     }
 
-    public override BehaviorState EvaluateNode()
+    public override BehaviorState LogicUpdate()
     {
-        Debug.Log("Move");
+        //Debug.Log("Move");
         Vector3 heading = transform.forward;
 
         object t = GetData("heading");

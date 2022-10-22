@@ -9,11 +9,11 @@ namespace TreeBehaviour
         public FallbackNode() : base() { }
         public FallbackNode(List<BehaviorNode> children) : base(children) { }
 
-        public override BehaviorState EvaluateNode()
+        public override BehaviorState LogicUpdate()
         {
             foreach (BehaviorNode node in children)
             {
-                switch (node.EvaluateNode())
+                switch (node.LogicUpdate())
                 {
                     case BehaviorState.RUNNING:
                         nodeState = BehaviorState.RUNNING;

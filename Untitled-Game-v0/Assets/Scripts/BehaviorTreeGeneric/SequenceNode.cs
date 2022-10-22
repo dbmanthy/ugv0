@@ -9,13 +9,13 @@ namespace TreeBehaviour
         public SequenceNode(): base() { }
         public SequenceNode(List<BehaviorNode> children): base(children) { }
 
-        public override BehaviorState EvaluateNode()
+        public override BehaviorState LogicUpdate()
         {
             bool childRunning = false;
 
             foreach(BehaviorNode node in children)
             {
-                switch(node.EvaluateNode())
+                switch(node.LogicUpdate())
                 {
                     case BehaviorState.RUNNING:
                         childRunning = true;

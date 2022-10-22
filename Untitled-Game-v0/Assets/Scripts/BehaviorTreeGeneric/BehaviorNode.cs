@@ -15,6 +15,7 @@ namespace TreeBehaviour
         protected BehaviorState nodeState;
         protected List<BehaviorNode> children = new List<BehaviorNode>();
 
+        public BehaviorNode root;
         public BehaviorNode parent;
 
         Dictionary<string, object> sharedTreeData = new Dictionary<string, object>();
@@ -35,13 +36,25 @@ namespace TreeBehaviour
         void AttachChild(BehaviorNode node)
         {
             node.parent = this;
+            //node.root = GetRoot(); some how this doesnt work ... 
             children.Add(node);
 
         }
 
-        public virtual BehaviorState EvaluateNode()
+        public virtual BehaviorState LogicUpdate()
         {
             return BehaviorState.FAILURE;
+        }
+
+        public BehaviorNode GetRoot()
+        {
+            BehaviorNode root = this;
+
+            while(root.parent != null)
+            {
+                root = root.parent;
+            }
+            return root;
         }
 
         public void SetData(string key, object value)

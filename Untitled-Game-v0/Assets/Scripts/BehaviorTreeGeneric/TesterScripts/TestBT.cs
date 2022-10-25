@@ -10,7 +10,7 @@ public class TestBT : BehaviorTree
     public static float raycastDist = 20f;
     public static float theta = 10f;
 
-    protected override BehaviorNode PlantSBTree()
+    protected override BehaviorNode PlantTree()
     {
         BehaviorNode root = new FallbackNode(new List<BehaviorNode>
         {

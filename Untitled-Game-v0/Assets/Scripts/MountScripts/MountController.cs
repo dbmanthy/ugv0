@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 public class MountController : MonoBehaviour
 {
     [SerializeField]
-    public MountData mountData;
+    public PlayerMountData mountData;
 
     public void Move(Vector2 input)
     {

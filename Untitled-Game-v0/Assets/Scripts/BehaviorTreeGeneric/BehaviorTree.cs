@@ -8,9 +8,9 @@ namespace TreeBehaviour
     {
         BehaviorNode root = null;
 
-        protected void Start()
+        protected virtual void Start()
         {
-            root = PlantSBTree();
+            root = PlantTree();
         }
 
         void Update()
@@ -31,6 +31,6 @@ namespace TreeBehaviour
         //    }
         //}
 
-        protected abstract BehaviorNode PlantSBTree();
+        protected abstract BehaviorNode PlantTree();
     }
 }

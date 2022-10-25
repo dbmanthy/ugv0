@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu( fileName = "newMountData", menuName = "Data/Mount Data/Base Data")]
-public class MountData : ScriptableObject
+public class PlayerMountData : ScriptableObject
 {
 
     [Header("BaseMovement")]

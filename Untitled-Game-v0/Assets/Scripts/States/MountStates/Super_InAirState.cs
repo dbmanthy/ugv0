@@ -35,7 +35,7 @@ public class Super_InAirState : State
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        input = mount.inputHandler.controllerInput;
+        input = mount.inputHandler.moveInput;
     }
 
     public override void PhysicsUpdate()

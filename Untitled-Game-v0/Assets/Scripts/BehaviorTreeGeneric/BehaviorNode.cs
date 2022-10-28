@@ -23,6 +23,7 @@ namespace TreeBehaviour
         public BehaviorNode()
         {
             parent = null;
+            root = this;
         }
 
         public BehaviorNode(List<BehaviorNode> _children)
@@ -36,7 +37,7 @@ namespace TreeBehaviour
         void AttachChild(BehaviorNode node)
         {
             node.parent = this;
-            //node.root = GetRoot(); some how this doesnt work ... 
+            node.root = GetRoot(); //some how this doesnt work ... 
             children.Add(node);
 
         }

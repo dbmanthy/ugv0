@@ -1,5 +1,5 @@
 {
-    "name": "Mount",
+    "name": "MountInputActions",
     "maps": [
         {
             "name": "Flying",
@@ -10,6 +10,14 @@
                     "type": "Value",
                     "id": "f9e17245-5067-4268-836d-d406ead8db70",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "37553edc-7dd8-4256-b82b-a7146f640096",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
@@ -78,6 +86,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf589e0f-14e7-459b-b669-9676d0c7fc85",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

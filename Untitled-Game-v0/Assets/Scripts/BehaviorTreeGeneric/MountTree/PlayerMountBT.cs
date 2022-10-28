@@ -14,20 +14,38 @@ public class PlayerMountBT : BehaviorTree
     PlayerMountController mountController;
     MountInputHandler inputHandler;
 
-    protected override void Start()
+    //TODO: can replace start with awake? remove start inheritance?
+    void Awake()
     {
         mountController = GetComponent<PlayerMountController>();
         inputHandler = GetComponent<MountInputHandler>();
-
-        base.Start();
     }
+
+    //protected override void Start()
+    //{
+    //    mountController = GetComponent<PlayerMountController>();
+    //    inputHandler = GetComponent<MountInputHandler>();
+
+    //    base.Start();
+    //}
 
     protected override BehaviorNode PlantTree()
     {
         BehaviorNode root = new FallbackNode(new List<BehaviorNode>
         {
-            new PlayerMountIdleNode(transform, mountController, mountData)
+            new SequenceNode(new List<BehaviorNode>
+            {
+                new InputCheck(inputHandler),
+                new BankNode(transform, mountController, mountData)
+            }),
+            new IdleFlyNode(transform, mountController, mountData)
         });
         return root;
     }
+}
+
+public static class DataLabels
+{
+    public static readonly string bankInput = "BankInput";
+    public static readonly string velocity = "Velocity";
 }

@@ -5,14 +5,16 @@ using UnityEngine;
 using TreeBehaviour;
 using UnityEngine.UIElements.Experimental;
 
-public class PlayerMountIdleNode : BehaviorNode
+using static PlayerMountBT;
+
+public class IdleFlyNode : BehaviorNode
 {
     public Transform transform;
 
     PlayerMountController controller;
     PlayerMountData mountData;
 
-    public PlayerMountIdleNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
+    public IdleFlyNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
     {
         this.transform = transform;
         this.controller = controller;
@@ -24,7 +26,7 @@ public class PlayerMountIdleNode : BehaviorNode
         //TODO: probably dont want this to be where the velocity is set
         Vector3 velocity;
 
-        object t = GetData("velocity");
+        object t = GetData(DataLabels.velocity);
         if (t != null)
         {
             velocity = (Vector3)t;
@@ -32,8 +34,8 @@ public class PlayerMountIdleNode : BehaviorNode
         else
         {
             velocity = mountData.velocity; //TODO: this should be base velocity
-            BehaviorNode root = GetRoot();
-            root.SetData("velocity", velocity);
+            root = GetRoot();
+            root.SetData(DataLabels.velocity, velocity);
         }
 
         controller.IdleMove(transform, velocity);

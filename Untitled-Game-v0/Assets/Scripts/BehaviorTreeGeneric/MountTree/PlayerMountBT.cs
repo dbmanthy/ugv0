@@ -14,28 +14,39 @@ public class PlayerMountBT : BehaviorTree
     PlayerMountController mountController;
     MountInputHandler inputHandler;
 
-    //TODO: can replace start with awake? remove start inheritance?
     void Awake()
     {
         mountController = GetComponent<PlayerMountController>();
         inputHandler = GetComponent<MountInputHandler>();
     }
 
-    //protected override void Start()
+    //protected override BehaviorNode PlantTree()
     //{
-    //    mountController = GetComponent<PlayerMountController>();
-    //    inputHandler = GetComponent<MountInputHandler>();
-
-    //    base.Start();
+    //    BehaviorNode root = new FallbackNode(new List<BehaviorNode>
+    //    {
+    //        new SequenceNode(new List<BehaviorNode>
+    //        {
+    //            new MoveInputCheck(inputHandler),
+    //            new BankNode(transform, mountController, mountData)
+    //        }),
+    //        new IdleFlyNode(transform, mountController, mountData)
+    //    });
+    //    return root;
     //}
-
     protected override BehaviorNode PlantTree()
     {
         BehaviorNode root = new FallbackNode(new List<BehaviorNode>
         {
+            //bank
             new SequenceNode(new List<BehaviorNode>
             {
-                new InputCheck(inputHandler),
+                new MoveInputCheck(inputHandler),
+                new BankNode(transform, mountController, mountData)
+            }),
+            //swoop
+            new SequenceNode(new List<BehaviorNode>
+            {
+                new SwoopInputCheck(inputHandler),
                 new BankNode(transform, mountController, mountData)
             }),
             new IdleFlyNode(transform, mountController, mountData)
@@ -48,4 +59,5 @@ public static class DataLabels
 {
     public static readonly string bankInput = "BankInput";
     public static readonly string velocity = "Velocity";
+    public static readonly string magnitude = "Magnitude";
 }

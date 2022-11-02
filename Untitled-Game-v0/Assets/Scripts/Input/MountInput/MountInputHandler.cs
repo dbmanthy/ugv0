@@ -8,9 +8,11 @@ public class MountInputHandler : MonoBehaviour
 {
     MountInputActions mountInputActions;
 
+    public InputAction.CallbackContext moveInputContext { get; private set; }
     public Vector2 moveInput { get; private set; }
     public bool yInputHeldDown { get; private set; }
-    public InputAction.CallbackContext moveInputContext { get; private set; }
+    public bool elevationChange { get; private set; }
+    
 
     void Awake()
     {
@@ -21,8 +23,8 @@ public class MountInputHandler : MonoBehaviour
     {
         //subscribe function to action
         mountInputActions.Flying.Movement.performed += OnMoveInput;
-        mountInputActions.Flying.Movement.Enable();
         //mountInputActions.Flying.Movement.performed += OnJumpInput;
+        mountInputActions.Flying.Movement.Enable();
 
         mountInputActions.Flying.Jump.performed += OnJumpInput;
         mountInputActions.Flying.Jump.Enable();

@@ -19,13 +19,14 @@ public class IdleFlyNode : BehaviorNode
         this.transform = transform;
         this.controller = controller;
         this.mountData = mountData;
+        //root = GetRoot();
     }
 
     public override BehaviorState LogicUpdate()
     {
         //TODO: probably dont want this to be where the velocity is set
         Vector3 velocity;
-
+        root = GetRoot();
         object t = GetData(DataLabels.velocity);
         if (t != null)
         {
@@ -34,7 +35,6 @@ public class IdleFlyNode : BehaviorNode
         else
         {
             velocity = mountData.velocity; //TODO: this should be base velocity
-            root = GetRoot();
             root.SetData(DataLabels.velocity, velocity);
         }
 

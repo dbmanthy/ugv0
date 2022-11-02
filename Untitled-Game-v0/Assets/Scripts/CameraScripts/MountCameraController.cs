@@ -19,7 +19,12 @@ public class MountCameraController : MonoBehaviour
         mountCamera.transform.position = transform.position + viewOffset;
     }
 
-    void FixedUpdate()
+    //void FixedUpdate()
+    //{
+    //    MoveCamera();
+    //    RotateCamera();
+    //}
+    void Update()
     {
         MoveCamera();
         RotateCamera();

@@ -5,19 +5,19 @@ using UnityEngine;
 using TreeBehaviour;
 using static PlayerMountBT;
 
-public class InputCheck : BehaviorNode
+public class MoveInputCheck : BehaviorNode
 {
     public MountInputHandler inputHandler;
 
-    public InputCheck(MountInputHandler inputHandler)
+    public MoveInputCheck(MountInputHandler inputHandler)
     {
         this.inputHandler = inputHandler;
+        //root = GetRoot();//TODO:Is there a better way to cache the root?d
     }
 
     public override BehaviorState LogicUpdate()
     {
-        root = GetRoot();//TODO:Theres gotta a better way to cache the root
-
+        root = GetRoot();
         if(inputHandler.moveInputContext.started)//TODO:should this be started or preformed
         {
             Vector2 input = inputHandler.moveInput;

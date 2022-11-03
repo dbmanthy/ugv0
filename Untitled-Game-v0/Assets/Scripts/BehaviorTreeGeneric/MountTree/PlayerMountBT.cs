@@ -19,7 +19,7 @@ public class PlayerMountBT : BehaviorTree
         mountController = GetComponent<PlayerMountController>();
         inputHandler = GetComponent<MountInputHandler>();
     }
-
+    //vvvvv will work if need backup test vvvvv
     //protected override BehaviorNode PlantTree()
     //{
     //    BehaviorNode root = new FallbackNode(new List<BehaviorNode>
@@ -33,6 +33,7 @@ public class PlayerMountBT : BehaviorTree
     //    });
     //    return root;
     //}
+    //^^^^^ will work if need backup test ^^^^^^
     protected override BehaviorNode PlantTree()
     {
         BehaviorNode root = new FallbackNode(new List<BehaviorNode>
@@ -44,13 +45,18 @@ public class PlayerMountBT : BehaviorTree
                 new BankNode(transform, mountController, mountData)
             }),
             //swoop
+            //new SequenceNode(new List<BehaviorNode>
+            //{
+            //    new SwoopInputCheck(inputHandler),
+            //    new (transform, mountController, mountData)
+            //}),
+            //Attack
             new SequenceNode(new List<BehaviorNode>
             {
-                new SwoopInputCheck(inputHandler),
-                new BankNode(transform, mountController, mountData)
+                new AttackNode(inputHandler)
             }),
             new IdleFlyNode(transform, mountController, mountData)
-        });
+        }); ;
         return root;
     }
 }

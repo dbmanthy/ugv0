@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Input/MountInputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Input/MountInput/MountInputActions.inputactions'
 
 using System;
 using System.Collections;
@@ -27,7 +27,7 @@ public class @MountInputActions : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""37553edc-7dd8-4256-b82b-a7146f640096"",
                     ""expectedControlType"": ""Button"",
@@ -109,7 +109,7 @@ public class @MountInputActions : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -149,7 +149,7 @@ public class @MountInputActions : IInputActionCollection, IDisposable
         // Flying
         m_Flying = asset.FindActionMap("Flying", throwIfNotFound: true);
         m_Flying_Movement = m_Flying.FindAction("Movement", throwIfNotFound: true);
-        m_Flying_Jump = m_Flying.FindAction("Jump", throwIfNotFound: true);
+        m_Flying_Attack = m_Flying.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -200,13 +200,13 @@ public class @MountInputActions : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Flying;
     private IFlyingActions m_FlyingActionsCallbackInterface;
     private readonly InputAction m_Flying_Movement;
-    private readonly InputAction m_Flying_Jump;
+    private readonly InputAction m_Flying_Attack;
     public struct FlyingActions
     {
         private @MountInputActions m_Wrapper;
         public FlyingActions(@MountInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Flying_Movement;
-        public InputAction @Jump => m_Wrapper.m_Flying_Jump;
+        public InputAction @Attack => m_Wrapper.m_Flying_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Flying; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -219,9 +219,9 @@ public class @MountInputActions : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_FlyingActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_FlyingActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_FlyingActionsCallbackInterface.OnMovement;
-                @Jump.started -= m_Wrapper.m_FlyingActionsCallbackInterface.OnJump;
-                @Jump.performed -= m_Wrapper.m_FlyingActionsCallbackInterface.OnJump;
-                @Jump.canceled -= m_Wrapper.m_FlyingActionsCallbackInterface.OnJump;
+                @Attack.started -= m_Wrapper.m_FlyingActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_FlyingActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_FlyingActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_FlyingActionsCallbackInterface = instance;
             if (instance != null)
@@ -229,9 +229,9 @@ public class @MountInputActions : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @Jump.started += instance.OnJump;
-                @Jump.performed += instance.OnJump;
-                @Jump.canceled += instance.OnJump;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -257,6 +257,6 @@ public class @MountInputActions : IInputActionCollection, IDisposable
     public interface IFlyingActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

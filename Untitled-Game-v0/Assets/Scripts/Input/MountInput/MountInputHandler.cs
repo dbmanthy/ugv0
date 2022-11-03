@@ -10,6 +10,8 @@ public class MountInputHandler : MonoBehaviour
 
     public InputAction.CallbackContext moveInputContext { get; private set; }
     public Vector2 moveInput { get; private set; }
+    public bool attackInput { get; private set; }
+
     public bool yInputHeldDown { get; private set; }
     public bool elevationChange { get; private set; }
     
@@ -26,14 +28,14 @@ public class MountInputHandler : MonoBehaviour
         //mountInputActions.Flying.Movement.performed += OnJumpInput;
         mountInputActions.Flying.Movement.Enable();
 
-        mountInputActions.Flying.Jump.performed += OnJumpInput;
-        mountInputActions.Flying.Jump.Enable();
+        mountInputActions.Flying.Attack.performed += OnAttackInput;
+        mountInputActions.Flying.Attack.Enable();
     }
 
     void OnDisable()
     {
         mountInputActions.Flying.Movement.Disable();
-        mountInputActions.Flying.Jump.Disable();
+        mountInputActions.Flying.Attack.Disable();
 
         //TODO: add a on being lifted up?? method subscription??s -> then have nodes store input 
     }
@@ -43,6 +45,19 @@ public class MountInputHandler : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         moveInputContext = context;
+    }
+
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            attackInput = true;
+        }
+    }
+
+    public void UseAttackInput()
+    {
+        attackInput = false;
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)

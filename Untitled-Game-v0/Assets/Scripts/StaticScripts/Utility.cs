@@ -37,4 +37,10 @@ public static class Utility
             input = 360 + input;
         return input;
     }
+
+    //sourcehttps://gamedev.stackexchange.com/questions/139003/calculate-vector3-global-point-projecting-it-in-local-space-using-unity-and-c
+    public static T[] CoorinateTransform<T>(T[] vector, T[][] currentCoordinateMatrix, T[][] newCoordinateMatrix)
+    {
+        return vector;
+    }
 }

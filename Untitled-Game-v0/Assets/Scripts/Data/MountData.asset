@@ -21,8 +21,9 @@ MonoBehaviour:
   yawLerpRate: 0.1
   outRollLerpRate: 0.5
   inRollLerpRate: 0.22
-  swoopDistance: 60
-  swoopDamping: 5
+  turnRateXY: 1.2
+  swoopRate: 1.2
+  swoopDamping: 1.2
   swoopTimeBuffer: 0.5
   elevationChangeTimeBuffer: 2
   worldBaseHeight: 0

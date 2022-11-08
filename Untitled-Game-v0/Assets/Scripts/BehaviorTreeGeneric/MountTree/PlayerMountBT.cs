@@ -36,34 +36,31 @@ public class PlayerMountBT : BehaviorTree
     //^^^^^ will work if need backup test ^^^^^^
     protected override BehaviorNode PlantTree()
     {
-        BehaviorNode root = new FallbackNode(new List<BehaviorNode>
+        BehaviorNode root = new SequenceNode(new List<BehaviorNode>
         {
-            //bank
-            new SequenceNode(new List<BehaviorNode>
+             new FallbackNode(new List<BehaviorNode>
             {
-                new MoveInputCheck(inputHandler),
-                new BankNode(transform, mountController, mountData)
+                //bank
+                new SequenceNode(new List<BehaviorNode>
+                {
+                    new MoveInputCheck(inputHandler),
+                    new FlyNode(transform, mountController, mountData)
+                }),
+                //swoop
+                //new SequenceNode(new List<BehaviorNode>
+                //{
+                //    new SwoopInputCheck(inputHandler),
+                //    new SwoopNode(transform, mountController, mountData)
+                //}),
+                //Attack
+                //new SequenceNode(new List<BehaviorNode>
+                //{
+                //    new AttackInputCheck(inputHandler)
+                //}),
+                new IdleFlyNode(transform, mountController, mountData)
             }),
-            //swoop
-            //new SequenceNode(new List<BehaviorNode>
-            //{
-            //    new SwoopInputCheck(inputHandler),
-            //    new (transform, mountController, mountData)
-            //}),
-            //Attack
-            new SequenceNode(new List<BehaviorNode>
-            {
-                new AttackNode(inputHandler)
-            }),
-            new IdleFlyNode(transform, mountController, mountData)
-        }); ;
+            new PlayerMountDebugNode()
+    });
         return root;
     }
-}
-
-public static class DataLabels
-{
-    public static readonly string bankInput = "BankInput";
-    public static readonly string velocity = "Velocity";
-    public static readonly string magnitude = "Magnitude";
 }

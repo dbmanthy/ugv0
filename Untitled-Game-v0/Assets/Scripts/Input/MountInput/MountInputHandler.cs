@@ -2,19 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; //TODO:not all these are needed.a chancge to be made accross the board
+using UnityEngine.InputSystem; //TODO:not all these are needed.a chancge to be made accross the 
 
 public class MountInputHandler : MonoBehaviour
 {
     MountInputActions mountInputActions;
 
+    //move
     public InputAction.CallbackContext moveInputContext { get; private set; }
     public Vector2 moveInput { get; private set; }
+
+    //attack
     public bool attackInput { get; private set; }
 
-    public bool yInputHeldDown { get; private set; }
-    public bool elevationChange { get; private set; }
-    
+    //swoop
+    public float swoopInputTime { get; private set; }
+    public int swoopInput { get; private set; }
+    public bool swoopInputPressed { get; private set; }
+    float swoopStartTime;
 
     void Awake()
     {
@@ -24,8 +29,9 @@ public class MountInputHandler : MonoBehaviour
     void OnEnable()
     {
         //subscribe function to action
-        mountInputActions.Flying.Movement.performed += OnMoveInput;
-        //mountInputActions.Flying.Movement.performed += OnJumpInput;
+        mountInputActions.Flying.Movement.started += OnSwoopInputDown;
+        mountInputActions.Flying.Movement.performed += OnMoveInput; // this is performed so the functions are called when the action is perfromed!! canchange this to started
+        mountInputActions.Flying.Movement.canceled += OnSwoopInputUp;
         mountInputActions.Flying.Movement.Enable();
 
         mountInputActions.Flying.Attack.performed += OnAttackInput;
@@ -44,6 +50,7 @@ public class MountInputHandler : MonoBehaviour
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+        Debug.Log(">>>>>>>>>>>>>>>>>>>>>>>>>>>input " + moveInput);
         moveInputContext = context;
     }
 
@@ -60,15 +67,23 @@ public class MountInputHandler : MonoBehaviour
         attackInput = false;
     }
 
-    public void OnJumpInput(InputAction.CallbackContext context)
+    public void OnSwoopInputDown(InputAction.CallbackContext context)
     {
         if (context.started && moveInput.y != 0)
         {
-            yInputHeldDown = true;
+            swoopInput = (int)moveInput.y; // input is automatically normilized
+            swoopInputPressed = true;
+            swoopStartTime = Time.time;
         }
-        else
+    }
+
+    public void OnSwoopInputUp(InputAction.CallbackContext context)
+    {
+        if (swoopInputPressed)
         {
-            yInputHeldDown = false;
+            swoopInputTime = Time.time - swoopStartTime;
+            swoopInputPressed = false;
+            swoopStartTime = 0f;
         }
     }
 }

@@ -21,11 +21,12 @@ public class PlayerMountData : ScriptableObject
     public float yawLerpRate = .1f;
     public float outRollLerpRate = .5f;
     public float inRollLerpRate = .22f;
+    public float turnRateXY = 1.2f;
     
 
     [Header("SwoopingInAir")]
-    public float swoopDistance = 30f;
-    public float swoopDamping = 30f;
+    public float swoopRate = 1.2f;
+    public float swoopDampRate = 1.2f;
     public float swoopTimeBuffer = .5f;
     public float elevationChangeTimeBuffer = 2f;
 

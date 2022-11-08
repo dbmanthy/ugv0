@@ -11,19 +11,23 @@ public class SwoopInputCheck : BehaviorNode
     public SwoopInputCheck(MountInputHandler inputHandler)
     {
         this.inputHandler = inputHandler;
-        root = GetRoot(); //Todo: this allows for jsut gettoing it onee right?
+        //root = GetRoot(); //Todo: this allows for jsut gettoing it onee right?
     }
 
     public override BehaviorState LogicUpdate()
     {
-        if (inputHandler.yInputHeldDown)
+        root = GetRoot();
+
+        if (!inputHandler.swoopInputPressed && inputHandler.swoopInputTime > 0)
         {
-            Debug.Log("jump pressed");
-            nodeState = BehaviorState.SUCCESS;
+            Debug.Log("jump released");
+            //root.SetData(DataLabels.swoopInput, inputHandler.swoopInput);
+            //root.SetData(DataLabels.swoopTime, Time.time);
+            nodeState = BehaviorState.RUNNING;
         }
         else
         {
-            Debug.Log("JUMP RELEASED");
+            Debug.Log("jump not released");
             nodeState = BehaviorState.FAILURE;
         }
         return nodeState;

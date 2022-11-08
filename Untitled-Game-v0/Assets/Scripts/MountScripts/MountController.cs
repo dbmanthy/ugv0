@@ -60,7 +60,9 @@ public class MountController : MonoBehaviour
     {
         //TODO: add gravity scaling to make it feel like a flappy bird flap .add weight  
         //TODO: subtract vertical move speed componsate for uptick
-        Vector3 swoopImpulse = Vector3.down * mountData.swoopDistance * input.y * Time.deltaTime * 100;
+        //Vector3 swoopImpulse = Vector3.down * mountData.swoopDistance * input.y * Time.deltaTime * 100;
+        Vector3 swoopImpulse = Vector3.down * mountData.swoopRate * input.y * Time.deltaTime * 100;
+
         //transform.position += swoopImpulse;
         mountData.velocity += swoopImpulse;
     }
@@ -70,7 +72,7 @@ public class MountController : MonoBehaviour
         int correcitonDirection = mountData.velocity.y > 0 ? -1 : 1;
         int lastSwoopVelocity = (int) mountData.velocity.y;
 
-        Vector3 swoopDamp = Vector3.up * mountData.swoopDamping * correcitonDirection * Time.deltaTime;
+        Vector3 swoopDamp = Vector3.up * mountData.swoopDampRate * correcitonDirection * Time.deltaTime;
         mountData.velocity += swoopDamp;
         int currentSwoopVelocity = (int) mountData.velocity.y;
 

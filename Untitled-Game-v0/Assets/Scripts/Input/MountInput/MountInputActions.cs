@@ -28,7 +28,7 @@ public class @MountInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Attack"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""37553edc-7dd8-4256-b82b-a7146f640096"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

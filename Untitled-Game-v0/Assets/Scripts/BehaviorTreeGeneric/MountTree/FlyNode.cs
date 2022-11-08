@@ -5,14 +5,14 @@ using UnityEngine;
 using TreeBehaviour;
 using UnityEngine.UIElements;
 
-public class BankNode : BehaviorNode
+public class FlyNode : BehaviorNode
 {
     public Transform transform;
 
     PlayerMountController controller;
     PlayerMountData mountData;
 
-    public BankNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
+    public FlyNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
     {
         this.transform = transform;
         this.controller = controller;
@@ -44,12 +44,22 @@ public class BankNode : BehaviorNode
             velocity = mountData.velocity; //TODO: this should be base velocity
             root.SetData(DataLabels.velocity, velocity);
         }
+
         //Vector3 velocity = (Vector3)GetData(DataLabels.velocity); //TODO: is it safe to assume this is never null? nope
         root = GetRoot();
         controller.EnterBank(transform, input, mountData.rotationSpeed, mountData.minRotate, mountData.maxRotate, mountData.inRollLerpRate);
-        velocity = controller.Move(transform, velocity, input, velocity.magnitude);
+        if (input.y != 0)
+        {
+            velocity = controller.EnterSwoop(velocity, input, velocity.magnitude, mountData.swoopRate, 4, 5);
+        }
+        else if (velocity.y != 0)
+        {
+            velocity = controller.ExitSwoop(velocity, velocity.magnitude, mountData.swoopDampRate);
+        }
+        velocity = controller.TurnXZ(velocity, input, mountData.turnRateXY, velocity.magnitude);
+        controller.Move(transform, velocity);
         controller.RotateToVelocity(transform, velocity, mountData.yawLerpRate);
-
+        
         root.SetData(DataLabels.velocity, velocity);
 
         BehaviorState nodeState = BehaviorState.RUNNING;

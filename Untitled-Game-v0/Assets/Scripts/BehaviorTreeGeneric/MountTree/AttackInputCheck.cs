@@ -4,11 +4,11 @@ using UnityEngine;
 
 using TreeBehaviour;
 
-public class AttackNode : BehaviorNode
+public class AttackInputCheck : BehaviorNode
 {
     public MountInputHandler inputHandler;
 
-    public AttackNode(MountInputHandler inputHandler)
+    public AttackInputCheck(MountInputHandler inputHandler)
     {
         this.inputHandler = inputHandler;
     }
@@ -17,13 +17,11 @@ public class AttackNode : BehaviorNode
     {
         if (inputHandler.attackInput)
         {
-            Debug.Log("space hit");
             inputHandler.UseAttackInput();
             nodeState = BehaviorState.SUCCESS;
         }
         else
         {
-            Debug.Log("space not hit");
             nodeState = BehaviorState.FAILURE;
         }
         return nodeState;

@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using TreeBehaviour;
-using UnityEngine.UIElements.Experimental;
 
-using static PlayerMountBT;
-
-public class IdleFlyNode : BehaviorNode
+public class SwoopNode : BehaviorNode
 {
     public Transform transform;
 
     PlayerMountController controller;
     PlayerMountData mountData;
 
-    public IdleFlyNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
+    public SwoopNode(Transform transform, PlayerMountController controller, PlayerMountData mountData)
     {
         this.transform = transform;
         this.controller = controller;
@@ -24,9 +21,7 @@ public class IdleFlyNode : BehaviorNode
 
     public override BehaviorState LogicUpdate()
     {
-        //TODO: probably dont want this to be where the velocity is set
         Vector3 velocity;
-        root = GetRoot();
         object t = GetData(DataLabels.velocity);
         if (t != null)
         {
@@ -37,15 +32,9 @@ public class IdleFlyNode : BehaviorNode
             velocity = mountData.velocity; //TODO: this should be base velocity
             root.SetData(DataLabels.velocity, velocity);
         }
-
-        if (velocity.y != 0)
-        {
-            velocity = controller.ExitSwoop(velocity, velocity.magnitude, mountData.swoopDampRate);
-        }
-        controller.Move(transform, velocity);
-        controller.RotateToVelocity(transform, velocity, mountData.yawLerpRate);
-
-        nodeState = BehaviorState.RUNNING;
+        Debug.Log("en'swoop");
+        //controller.EnterSwoop();
+        nodeState = BehaviorState.SUCCESS;
         return nodeState;
     }
 }

@@ -19,7 +19,7 @@ public class PlayerInputHandler : MonoBehaviour
     void OnEnable()
     {
         //WASD
-        inputActions.Grounded.Movement.performed += OnMoveInput; // need to use performed not started. If you started doesn't pick up on if two keys are being pressed at the same time
+        inputActions.Grounded.Movement.performed += OnMoveInput; // need to use performed not started. If you started doesn't pick up on if two keys are being pressed at the same timea
         inputActions.Grounded.Movement.canceled += OnMoveInputStop;
         inputActions.Grounded.Movement.Enable();
 
@@ -37,7 +37,6 @@ public class PlayerInputHandler : MonoBehaviour
     void OnMoveInput(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();//input system takes care of normalizing input
-        Debug.Log("input " + moveInput);
         activeMoveInput = true;
     }
 

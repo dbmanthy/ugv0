@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class Utility
 {
@@ -42,5 +43,33 @@ public static class Utility
     public static T[] CoorinateTransform<T>(T[] vector, T[][] currentCoordinateMatrix, T[][] newCoordinateMatrix)
     {
         return vector;
+    }
+
+    //sourcehttps://nerdhut.de/2020/05/09/unity-arcball-camera-spherical-coordinates/
+    public static Vector3 getSphericalCoordinates(Vector3 cartesian)
+    {
+        float r = Mathf.Sqrt(
+            Mathf.Pow(cartesian.x, 2) +
+            Mathf.Pow(cartesian.y, 2) +
+            Mathf.Pow(cartesian.z, 2)
+        );
+
+        // use atan2 for built-in checks
+        float phi = Mathf.Atan2(cartesian.z / cartesian.x, cartesian.x);
+        float theta = Mathf.Acos(cartesian.y / r);
+
+        return new Vector3(r, phi, theta);
+    }
+
+    //sourcehttps://nerdhut.de/2020/05/09/unity-arcball-camera-spherical-coordinates/
+    public static Vector3 getCartesianCoordinates(Vector3 spherical)
+    {
+        Vector3 ret = new Vector3();
+
+        ret.x = spherical.x * Mathf.Cos(spherical.z) * Mathf.Cos(spherical.y);
+        ret.y = spherical.x * Mathf.Sin(spherical.z);
+        ret.z = spherical.x * Mathf.Cos(spherical.z) * Mathf.Sin(spherical.y);
+
+        return ret;
     }
 }
